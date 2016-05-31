@@ -23,6 +23,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
 
     var mapLen = 0;
 
+    var _extensionsIndex = {};
+
     var cssScene, cssRenderer, camera, controls, glScene, glRenderer;
     /////////////////////////////////////////////////////////
     //
@@ -95,6 +97,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                         $('#' + extension.itemId).addClass('enabled');
 
                         _selectedExtensions[extension.id] = extension;
+                        _extensionsIndex[extension._id] = extension.id;
 
                         loadExtension(extension);
                     }
@@ -105,6 +108,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                         delete _selectedExtensions[extension.id];
 
                         delete _extensionsPages[extension.id];
+
+                        delete _extensionsIndex[extension._id];
                         //viewer.unloadExtension(extension.id);
                     }
                 };
@@ -293,7 +298,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         });*/
 
         //hard coded this pard, i hate it...
-        _extensionsPages[extension.id] = 'localhost:3000/' + options.pages + '/' + extension.name + '/';
+        _extensionsPages[extension.id] = 'http://localhost:3000/' + options.pagesUrl + '/' + extension.name;
     }
 
     function loadNewViewer() {
@@ -385,13 +390,17 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         var posZOffset = 0;
         var rotOffset = 0;
 
+        console.log(_extensionsPages);
+        
+
         if(mapLen % 2 === 1){
             create3dPage(
                 1000,1000,
                 new THREE.Vector3(0,0,-400),
                 new THREE.Vector3(0,0,0),
-                'localhost:3000/pages/Explorer'
+                _extensionsPages[_extensionsIndex[int2String(0)]]
             );
+            // console.log(_extensionsPages['Explorer']);
             console.log(mapLen);
             var halfLen = (mapLen-1)>>1;
             console.log(halfLen);
@@ -405,7 +414,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                     1000,1000,
                     new THREE.Vector3(500 + posXOffset,0, -400 + posZOffset ),
                     new THREE.Vector3(0,-1 * rotOffset * Math.PI/180,0),
-                    'localhost:3000/pages/Explorer'
+                    _extensionsPages[_extensionsIndex[int2String(i)]],
+                    _extensionsPages[_extensionsIndex[int2String(mapLen-i)]]
                 );
                 posXOffset += 500 * Math.cos(rotOffset * Math.PI / 180);
                 posZOffset += 500 * Math.sin(rotOffset * Math.PI / 180);
@@ -414,7 +424,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
             var halfLen = mapLen >> 1;
             console.log(halfLen);
             var unitRot = 60 /halfLen;
-            for(var i = 1; i <= halfLen; ++i){
+            for(var i = 0; i < halfLen; ++i){
                 rotOffset += unitRot;
                 posXOffset += 500 * Math.cos(rotOffset * Math.PI / 180);
                 posZOffset += 500 * Math.sin(rotOffset * Math.PI / 180);
@@ -422,7 +432,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                     1000,1000,
                     new THREE.Vector3(posXOffset,0, -400 + posZOffset ),
                     new THREE.Vector3(0,-1 * rotOffset * Math.PI/180,0),
-                    'localhost:3000/pages/Explorer'
+                    _extensionsPages[_extensionsIndex[int2String(i)]],
+                    _extensionsPages[_extensionsIndex[int2String(mapLen-i-1)]]
                 );
 
                 posXOffset += 500 * Math.cos(rotOffset * Math.PI / 180);
@@ -431,13 +442,13 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         }
     }
 
-    function createHalfSide(w,h,position,rotation,url) {
-        create3dPage(w,h,position,rotation,url);
+    function createHalfSide(w,h,position,rotation,urlL,urlR) {
+        create3dPage(w,h,position,rotation,urlL);
         create3dPage(
             w,h,
             new THREE.Vector3(-1 * position.x,0,position.z),
             new THREE.Vector3(0, -1 * rotation.y, 0),
-            url
+            urlR
         );
     }
 
@@ -447,6 +458,14 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                 ++mapLen;
             }
         }
+    }
+
+    function string2Int(sIndex){
+        return parseInt(sIndex);
+    }
+
+    function int2String(iIndex) {
+        return iIndex.toString();
     }
 
     function initialize() {

@@ -54,4 +54,5 @@ function loadDocument(viewer, documentId) {
 
 $(document).ready(function() {
     initialize();
+    //console.log("-1");
 })

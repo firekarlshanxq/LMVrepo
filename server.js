@@ -18,7 +18,7 @@ config.grant_type = 'client_credentials';
 var app = express();
 app.use('/', express.static(__dirname + '/public'));
 app.use('/pages/Explorer', express.static(__dirname + '/public/pages/Explorer'));
-app.use('/pages/Docking Panel', express.static(__dirname + '/public/pages/DockingPanel'));
+app.use('/pages/DockingPanel', express.static(__dirname + '/public/pages/DockingPanel'));
 app.use('/pages/Toolbar', express.static(__dirname + '/public/pages/Toolbar'));
 app.use('/pages/ScreenShotManager', express.static(__dirname + '/public/pages/ScreenShotManager'));
 
@@ -26,11 +26,17 @@ var router = express.Router();
 
 router.get('/extensions', function (req, res) {
     res.json([
-		{"_id":"555cb32a904e18c811dcf24a","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager ","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},
-		{"_id":"545f1c0abe50d16010d233ae","id":"Autodesk.ADN.Viewing.Extension.Toolbar","name":"Toolbar ","file":"Autodesk.ADN.Viewing.Extension.Toolbar.js"},
-		{"_id":"546530bd342d865016c6839d","id":"Autodesk.ADN.Viewing.Extension.DockingPanel","name":"Docking Panel ","file":"Autodesk.ADN.Viewing.Extension.DockingPanel.js"},
-		{"_id":"551844023dfebce004ce4010","id":"Autodesk.ADN.Viewing.Extension.Explorer","name":"Explorer ","file":"Autodesk.ADN.Viewing.Extension.Explorer.js"}
+		{"_id":"0","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},
+		{"_id":"1","id":"Autodesk.ADN.Viewing.Extension.Toolbar","name":"Toolbar","file":"Autodesk.ADN.Viewing.Extension.Toolbar.js"},
+		{"_id":"2","id":"Autodesk.ADN.Viewing.Extension.DockingPanel","name":"DockingPanel","file":"Autodesk.ADN.Viewing.Extension.DockingPanel.js"},
+		{"_id":"3","id":"Autodesk.ADN.Viewing.Extension.Explorer","name":"Explorer","file":"Autodesk.ADN.Viewing.Extension.Explorer.js"}
 	]);
+    /*res.json([
+        {"_id":"555cb32a904e18c811dcf24a","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},
+        {"_id":"545f1c0abe50d16010d233ae","id":"Autodesk.ADN.Viewing.Extension.Toolbar","name":"Toolbar","file":"Autodesk.ADN.Viewing.Extension.Toolbar.js"},
+        {"_id":"546530bd342d865016c6839d","id":"Autodesk.ADN.Viewing.Extension.DockingPanel","name":"DockingPanel","file":"Autodesk.ADN.Viewing.Extension.DockingPanel.js"},
+        {"_id":"551844023dfebce004ce4010","id":"Autodesk.ADN.Viewing.Extension.Explorer","name":"Explorer","file":"Autodesk.ADN.Viewing.Extension.Explorer.js"}
+    ]);*/
 });
 
 var authWithCredentials = function(req, authRes) {
@@ -91,15 +97,7 @@ router.get('/auth', function (req, authRes) {
     }
 });
 
-var router2 = express.Router();
-
-router2.get('/Explorer',function (req,res) {
-    res.sendfile('/public/pages/Explorer/index - Explorer.html');
-});
-
-
 app.use('/tt', router);
-app.use('/pages',router2);
 
 app.set('port', process.env.PORT || process.argv[2] || 3000);
 var server = app.listen(app.get('port'), function() {
