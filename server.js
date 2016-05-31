@@ -17,10 +17,16 @@ config.grant_type = 'client_credentials';
 
 var app = express();
 app.use('/', express.static(__dirname + '/public'));
+
 app.use('/pages/Explorer', express.static(__dirname + '/public/pages/Explorer'));
 app.use('/pages/DockingPanel', express.static(__dirname + '/public/pages/DockingPanel'));
 app.use('/pages/Toolbar', express.static(__dirname + '/public/pages/Toolbar'));
 app.use('/pages/ScreenShotManager', express.static(__dirname + '/public/pages/ScreenShotManager'));
+app.use('/pages/Chart',express.static(__dirname + '/public/pages/Chart'));
+app.use('/pages/CSSRenderer',express.static(__dirname + '/public/pages/CSSRenderer'));
+app.use('/pages/ModelStructure',express.static(__dirname + '/public/pages/ModelStructure'));
+app.use('/pages/Move',express.static(__dirname + '/public/pages/Move'));
+app.use('/pages/TransformTool',express.static(__dirname + '/public/pages/TransformTool'));
 
 var router = express.Router();
 
@@ -29,7 +35,12 @@ router.get('/extensions', function (req, res) {
 		{"_id":"0","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},
 		{"_id":"1","id":"Autodesk.ADN.Viewing.Extension.Toolbar","name":"Toolbar","file":"Autodesk.ADN.Viewing.Extension.Toolbar.js"},
 		{"_id":"2","id":"Autodesk.ADN.Viewing.Extension.DockingPanel","name":"DockingPanel","file":"Autodesk.ADN.Viewing.Extension.DockingPanel.js"},
-		{"_id":"3","id":"Autodesk.ADN.Viewing.Extension.Explorer","name":"Explorer","file":"Autodesk.ADN.Viewing.Extension.Explorer.js"}
+		{"_id":"3","id":"Autodesk.ADN.Viewing.Extension.Explorer","name":"Explorer","file":"Autodesk.ADN.Viewing.Extension.Explorer.js"},
+        {"_id":"4","id":"Autodesk.ADN.Viewing.Extension.Chart","name":"Chart","file":"Autodesk.ADN.Viewing.Extension.Chart.js"},
+        {"_id":"5","id":"Autodesk.ADN.Viewing.Extension.CSSRenderer","name":"CSSRenderer","file":"Autodesk.ADN.Viewing.Extension.CSSRenderer.js"},
+        {"_id":"6","id":"Autodesk.ADN.Viewing.Extension.ModelStructure","name":"ModelStructure","file":"Autodesk.ADN.Viewing.Extension.ModelStructure.js"},
+        {"_id":"7","id":"Autodesk.ADN.Viewing.Extension.Move","name":"Move","file":"Autodesk.ADN.Viewing.Extension.Move.js"},
+        {"_id":"8","id":"Autodesk.ADN.Viewing.Extension.TransformTool","name":"TransformTool","file":"Autodesk.ADN.Viewing.Extension.TransformTool.js"}
 	]);
     /*res.json([
         {"_id":"555cb32a904e18c811dcf24a","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},

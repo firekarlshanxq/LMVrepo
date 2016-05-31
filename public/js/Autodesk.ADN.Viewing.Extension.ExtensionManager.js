@@ -23,7 +23,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
 
     var mapLen = 0;
 
-    var _extensionsIndex = {};
+    var _extensionsIndex;
 
     var cssScene, cssRenderer, camera, controls, glScene, glRenderer;
     /////////////////////////////////////////////////////////
@@ -97,7 +97,6 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                         $('#' + extension.itemId).addClass('enabled');
 
                         _selectedExtensions[extension.id] = extension;
-                        _extensionsIndex[extension._id] = extension.id;
 
                         loadExtension(extension);
                     }
@@ -109,7 +108,6 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
 
                         delete _extensionsPages[extension.id];
 
-                        delete _extensionsIndex[extension._id];
                         //viewer.unloadExtension(extension.id);
                     }
                 };
@@ -302,7 +300,16 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
     }
 
     function loadNewViewer() {
+        initializeIndex();
         initialize();
+    }
+
+    function initializeIndex(){
+        _extensionsIndex = new Array();
+        for(id in _selectedExtensions){
+            _extensionsIndex.push(id);
+        }
+        console.log(_extensionsIndex);
     }
 
     function createGlRenderer() {
@@ -346,7 +353,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         var cssRenderer = new THREE.CSS3DRenderer();
         cssRenderer.setSize(window.innerWidth, window.innerHeight);
         cssRenderer.domElement.style.position = 'absolute';
-        //glRenderer.domElement.style.zIndex = 0;
+        glRenderer.domElement.style.zIndex = 0;
         cssRenderer.domElement.style.top = 0;
         cssRenderer.domElement.style.zIndex = 2;
         return cssRenderer;
@@ -391,14 +398,14 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         var rotOffset = 0;
 
         console.log(_extensionsPages);
-        
+
 
         if(mapLen % 2 === 1){
             create3dPage(
                 1000,1000,
                 new THREE.Vector3(0,0,-400),
                 new THREE.Vector3(0,0,0),
-                _extensionsPages[_extensionsIndex[int2String(0)]]
+                getUrl()
             );
             // console.log(_extensionsPages['Explorer']);
             console.log(mapLen);
@@ -414,8 +421,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                     1000,1000,
                     new THREE.Vector3(500 + posXOffset,0, -400 + posZOffset ),
                     new THREE.Vector3(0,-1 * rotOffset * Math.PI/180,0),
-                    _extensionsPages[_extensionsIndex[int2String(i)]],
-                    _extensionsPages[_extensionsIndex[int2String(mapLen-i)]]
+                    getUrl(),
+                    getUrl()
                 );
                 posXOffset += 500 * Math.cos(rotOffset * Math.PI / 180);
                 posZOffset += 500 * Math.sin(rotOffset * Math.PI / 180);
@@ -432,8 +439,8 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
                     1000,1000,
                     new THREE.Vector3(posXOffset,0, -400 + posZOffset ),
                     new THREE.Vector3(0,-1 * rotOffset * Math.PI/180,0),
-                    _extensionsPages[_extensionsIndex[int2String(i)]],
-                    _extensionsPages[_extensionsIndex[int2String(mapLen-i-1)]]
+                    getUrl(),
+                    getUrl()
                 );
 
                 posXOffset += 500 * Math.cos(rotOffset * Math.PI / 180);
@@ -459,6 +466,11 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
             }
         }
     }
+    function getUrl() {
+        var id = _extensionsIndex.pop();
+        console.log(id);
+        return _extensionsPages[id.toString()];
+    }
 
     function string2Int(sIndex){
         return parseInt(sIndex);
@@ -480,20 +492,17 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
             return 45;
         }
 
-        console.log(camera);
         glRenderer = createGlRenderer();
         cssRenderer = createCssRenderer();
 
-        console.log(cssRenderer);
         controls = new THREE.TrackballControls(camera);
         
         document.body.appendChild(cssRenderer.domElement);
+        document.body.appendChild(glRenderer.domElement);
         glScene = new THREE.Scene();
         cssScene = new THREE.Scene();
 
-        console.log(_selectedExtensions);
         countLen();
-        console.log(mapLen);
         createPages();
         /*for(var id in _selectedExtensions){
             create3dPage(
