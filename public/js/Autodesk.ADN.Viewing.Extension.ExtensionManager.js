@@ -32,6 +32,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
     //////////////////////////////////////////////////////////
     _this.load = function () {
         console.log(options);
+        console.log(viewer);
 
         var ctrlGroup = getControlGroup();
 

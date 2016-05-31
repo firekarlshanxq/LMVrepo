@@ -27,6 +27,7 @@ app.use('/pages/CSSRenderer',express.static(__dirname + '/public/pages/CSSRender
 app.use('/pages/ModelStructure',express.static(__dirname + '/public/pages/ModelStructure'));
 app.use('/pages/Move',express.static(__dirname + '/public/pages/Move'));
 app.use('/pages/TransformTool',express.static(__dirname + '/public/pages/TransformTool'));
+app.use('/pages/BoundingBox',express.static(__dirname + '/public/pages/BoundingBox'));
 
 var router = express.Router();
 
@@ -40,7 +41,8 @@ router.get('/extensions', function (req, res) {
         {"_id":"5","id":"Autodesk.ADN.Viewing.Extension.CSSRenderer","name":"CSSRenderer","file":"Autodesk.ADN.Viewing.Extension.CSSRenderer.js"},
         {"_id":"6","id":"Autodesk.ADN.Viewing.Extension.ModelStructure","name":"ModelStructure","file":"Autodesk.ADN.Viewing.Extension.ModelStructure.js"},
         {"_id":"7","id":"Autodesk.ADN.Viewing.Extension.Move","name":"Move","file":"Autodesk.ADN.Viewing.Extension.Move.js"},
-        {"_id":"8","id":"Autodesk.ADN.Viewing.Extension.TransformTool","name":"TransformTool","file":"Autodesk.ADN.Viewing.Extension.TransformTool.js"}
+        {"_id":"8","id":"Autodesk.ADN.Viewing.Extension.TransformTool","name":"TransformTool","file":"Autodesk.ADN.Viewing.Extension.TransformTool.js"},
+        {"_id":"9","id":"Autodesk.ADN.Viewing.Extension.BoundingBox","name":"BoundingBox","file":"Autodesk.ADN.Viewing.Extension.BoundingBox.js"}
 	]);
     /*res.json([
         {"_id":"555cb32a904e18c811dcf24a","id":"Autodesk.ADN.Viewing.Extension.ScreenShotManager","name":"ScreenShotManager","file":"Autodesk.ADN.Viewing.Extension.ScreenShotManager.js"},
