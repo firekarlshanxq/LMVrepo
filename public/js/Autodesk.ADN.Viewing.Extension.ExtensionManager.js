@@ -316,14 +316,14 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         return glRenderer;
     }
 
-    function createCssRenderer() {
+    /*function createCssRenderer() {
         var cssRenderer = new THREE.CSS3DRenderer();
         cssRenderer.setSize(window.innerWidth, window.innerHeight);
         cssRenderer.domElement.style.position = 'absolute';
         glRenderer.domElement.style.zIndex = 0;
         cssRenderer.domElement.style.top = 0;
         return cssRenderer;
-    }
+    }*/
 
     function createPlane(w, h, position, rotation) {
         var material = new THREE.MeshBasicMaterial({
