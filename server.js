@@ -6,9 +6,12 @@ var config = {};
 if (process.env.CLIENT_ID && process.env.CLIENT_SECRET) {
     config.client_id = process.env.CLIENT_ID;
     config.client_secret = process.env.CLIENT_SECRET;
+    console.log(process.env.CLIENT_ID);
+    console.log(process.env.CLIENT_SECRET);
 } else {
     try {
         config = require('./config.json');
+        console.log(config);
     } catch(e) {
         console.log("No config defined");
     }

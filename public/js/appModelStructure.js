@@ -1,6 +1,6 @@
 function initialize() {
     var options = {
-        'document' : 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cmVkYnVja2V0L2N5bGluZGVyLmYzZA==',
+        'document' : 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE2LTA2LTAyLTA3LTA0LTAwLXhsNWZiOGRpbXk2amVyYndzdGxvbnJ4M2l1eGIvUm9ib3RBcm0xLmR3Zng=',
         'env':'AutodeskProduction',
         'getAccessToken': getToken,
         'refreshToken': getToken,
