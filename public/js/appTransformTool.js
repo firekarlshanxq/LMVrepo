@@ -1,6 +1,7 @@
 function initialize() {
+    var urn =  'urn:' + Autodesk.Viewing.Private.getParameterByName('urn');
     var options = {
-        'document' : 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cmVkYnVja2V0L2N5bGluZGVyLmYzZA==',
+        'document' : urn,
         'env':'AutodeskProduction',
         'getAccessToken': getToken,
         'refreshToken': getToken,

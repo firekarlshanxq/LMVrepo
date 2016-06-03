@@ -1,9 +1,11 @@
 function initialize() {
+    var urn =  'urn:' + Autodesk.Viewing.Private.getParameterByName('urn');
+    console.log(urn);
     var options = {
-        'document' : 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE2LTA2LTAyLTA3LTA0LTAwLXhsNWZiOGRpbXk2amVyYndzdGxvbnJ4M2l1eGIvUm9ib3RBcm0xLmR3Zng=',
+        'document' : urn,
         'env':'AutodeskProduction',
         'getAccessToken': getToken,
-        'refreshToken': getToken,
+        'refreshToken': getToken
     };
     var viewerElement = document.getElementById('viewer');
     var viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerElement,
@@ -12,13 +14,14 @@ function initialize() {
             apiUrl: 'tt/extensions',
             extensionsUrl: 'extensions',
             extensionsSourceUrl: 'extensions',
-            pagesUrl : 'pages'
+            pagesUrl : 'pages',
+            urn : Autodesk.Viewing.Private.getParameterByName('urn')
         });
     Autodesk.Viewing.Initializer(
         options,
         function() {
             viewer.start();
-            loadDocument(viewer, options.document);
+            loadDocument(viewer, options.document, options);
         }
     );
 }
@@ -38,18 +41,27 @@ function getToken() {
 	return accessToken;
 }
 
-function loadDocument(viewer, documentId) {
+function loadDocument(viewer, documentId, options) {
     Autodesk.Viewing.Document.load(
         documentId,
         function(doc) {
-            var geometryItems = [];
-            geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
+            var geometryItems3d = [];
+            geometryItems3d = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
                 'type' : 'geometry',
                 'role' : '3d'
             }, true);
-            if (geometryItems.length > 0) {
-                viewer.load(doc.getViewablePath(geometryItems[0]));
-            }
+
+            var geometryItems2d = [];
+            geometryItems2d = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(),{
+                'type' : 'geometry',
+                'role' : '2d'
+            },true);
+            /*if (geometryItems.length > 0) {
+                //viewer.load(doc.getViewablePath(geometryItems[0]));
+
+            }*/
+            var viewablePath = geometryItems3d.length ? geometryItems3d[0] : geometryItems2d[0];
+            viewer.loadModel(doc.getViewablePath(viewablePath),options);
         },
         function(errorMsg) {
             alert("Load Error: " + errorMsg);

@@ -1,6 +1,7 @@
 var express = require('express');
 var https = require('https');
 var formurlencoded = require('form-urlencoded');
+var upload = require('./routes/upload');
 
 var config = {};
 if (process.env.CLIENT_ID && process.env.CLIENT_SECRET) {
@@ -10,27 +11,30 @@ if (process.env.CLIENT_ID && process.env.CLIENT_SECRET) {
     console.log(process.env.CLIENT_SECRET);
 } else {
     try {
-        config = require('./config.json');
-        console.log(config);
+        /*config = require('./config.json');
+        console.log(config);*/
+        config = require('./credentials').credentials;
     } catch(e) {
         console.log("No config defined");
     }
 }
-config.grant_type = 'client_credentials';
+//config.grant_type = 'client_credentials';
 
 var app = express();
 app.use('/', express.static(__dirname + '/public'));
 
-app.use('/pages/Explorer', express.static(__dirname + '/public/pages/Explorer'));
-app.use('/pages/DockingPanel', express.static(__dirname + '/public/pages/DockingPanel'));
-app.use('/pages/Toolbar', express.static(__dirname + '/public/pages/Toolbar'));
-app.use('/pages/ScreenShotManager', express.static(__dirname + '/public/pages/ScreenShotManager'));
-app.use('/pages/Chart',express.static(__dirname + '/public/pages/Chart'));
-app.use('/pages/CSSRenderer',express.static(__dirname + '/public/pages/CSSRenderer'));
-app.use('/pages/ModelStructure',express.static(__dirname + '/public/pages/ModelStructure'));
-app.use('/pages/Move',express.static(__dirname + '/public/pages/Move'));
-app.use('/pages/TransformTool',express.static(__dirname + '/public/pages/TransformTool'));
-app.use('/pages/BoundingBox',express.static(__dirname + '/public/pages/BoundingBox'));
+app.use('/api', upload);
+
+app.use('/pages/Explorer/', express.static(__dirname + '/public/pages/Explorer'));
+app.use('/pages/DockingPanel/', express.static(__dirname + '/public/pages/DockingPanel'));
+app.use('/pages/Toolbar/', express.static(__dirname + '/public/pages/Toolbar'));
+app.use('/pages/ScreenShotManager/', express.static(__dirname + '/public/pages/ScreenShotManager'));
+app.use('/pages/Chart/',express.static(__dirname + '/public/pages/Chart'));
+app.use('/pages/CSSRenderer/',express.static(__dirname + '/public/pages/CSSRenderer'));
+app.use('/pages/ModelStructure/',express.static(__dirname + '/public/pages/ModelStructure'));
+app.use('/pages/Move/',express.static(__dirname + '/public/pages/Move'));
+app.use('/pages/TransformTool/',express.static(__dirname + '/public/pages/TransformTool'));
+app.use('/pages/BoundingBox/',express.static(__dirname + '/public/pages/BoundingBox'));
 
 var router = express.Router();
 

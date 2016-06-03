@@ -20,7 +20,12 @@
   "dependencies": {
     "bower": "^1.6.5",
     "express": "^4.13.3",
-    "form-urlencoded": "^0.1.4"
+    "form-urlencoded": "^0.1.4",
+    "request": ">= 2.55.0",
+    "body-parser": ">= 1.11.0",
+    "formidable": ">= 1.0.17",
+    "unirest": ">= 0.4.0",
+    "async": ">= 0.9.0"
   },
   "scripts": {
     "postinstall": "bower install"

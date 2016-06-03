@@ -3,6 +3,7 @@
 // by Philippe Leefsma, May 2015
 //
 ///////////////////////////////////////////////////////////////////////////////
+
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
 Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
@@ -297,7 +298,7 @@ Autodesk.ADN.Viewing.Extension.ExtensionManager = function (viewer, options) {
         });*/
 
         //hard coded this pard, i hate it...
-        _extensionsPages[extension.id] = 'http://localhost:3000/' + options.pagesUrl + '/' + extension.name;
+        _extensionsPages[extension.id] = 'http://' + window.location.host + '/' + options.pagesUrl + '/' + extension.name + '/?urn=' + options.urn;
     }
 
     function loadNewViewer() {
