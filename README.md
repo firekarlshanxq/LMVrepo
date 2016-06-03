@@ -1,9 +1,9 @@
-#Viewer Extensions
+#LMV test
 
 
 ##Description
 
-This example demonstrates adding new functionality to Autodesk Large Model Viewer (LMV) using extensions. Extensions can be enabled during the Viewer loading process or later. Both scenarios are covered in this example. When the application starts, the Extension Manager (Viewer extension) is loaded automatically and is added to the Viewer toolbar as a '+' button. Click this button to open a list of other available extensions that you can enable/disable at any time. 
+This example follows the tutorials on Autodesk Forge website and demonstrates uploading new models and adding new functionality to Autodesk Large Model Viewer (LMV) using extensions. Also, this example shows a new way of displaying different extensions of LMV within one page. Extensions can be enabled during the Viewer loading process or later. Both scenarios are covered in this example. When the application starts, the Extension Manager (Viewer extension) is loaded automatically and is added to the Viewer toolbar as a '+' button. Click this button to open a list of other available extensions that you can enable some of them to have a preview before you start making your own extensions. 
 
 Each dynamic extension provided by the Extension Manager provides a great example of adding a new functionality to the Viewer. To see the extension source code, you may click the “Source” button or just view the source code of this example.
 
